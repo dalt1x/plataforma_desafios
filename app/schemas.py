@@ -1,0 +1,29 @@
+from pydantic import BaseModel
+from typing import Optional
+
+class Resposta(BaseModel):
+    user_id: int
+    problem_id: int
+    resposta: str
+
+class UsuarioCreate(BaseModel):
+    nome: str
+    email: str
+    senha: str
+
+class ProblemaCreate(BaseModel):
+    titulo: str
+    enunciado: str
+    nivel: str
+    tema: str
+    tipo: str
+    resposta_esperada: str
+
+class UsuarioOut(BaseModel):
+    id: int
+    nome: str
+    email: str
+    score: int
+
+    class Config:
+        orm_mode = True
