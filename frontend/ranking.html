@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ranking | Plataforma de Desafios</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <h1>Plataforma de Desafios</h1>
+      </div>
+      <div class="nav-links">
+        <a href="login.html">Login</a>
+        <a href="desafios.html">Desafios</a>
+        <a href="ranking.html" class="active">Ranking</a>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="content-container">
+      <h2>Ranking de Usuários</h2>
+      <div class="ranking-container">
+        <table id="ranking-table" class="ranking-table">
+          <thead>
+            <tr>
+              <th>Posição</th>
+              <th>Usuário</th>
+              <th>Pontuação</th>
+              <th>Desafios Resolvidos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Ranking data will be loaded here -->
+          </tbody>
+        </table>
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Plataforma de Desafios</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/ranking.js"></script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resolver Desafio | Plataforma de Desafios</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <h1>Plataforma de Desafios</h1>
+      </div>
+      <div class="nav-links">
+        <a href="login.html">Login</a>
+        <a href="desafios.html" class="active">Desafios</a>
+        <a href="ranking.html">Ranking</a>
+        <a href="#" id="logout-link" style="display: none;">Sair</a>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="content-container">
+      <div class="challenge-details-container">
+        <div class="back-link">
+          <a href="desafios.html">← Voltar para Desafios</a>
+        </div>
+
+        <!-- Detalhes do desafio -->
+        <div id="challenge-details" class="challenge-card">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Carregando desafio...</p>
+          </div>
+        </div>
+
+        <!-- Formulário para resposta -->
+        <form id="solution-form" class="solution-form">
+          <h3>Sua Resposta</h3>
+          <div class="form-group">
+            <textarea id="solution" name="solution" rows="10" required placeholder="Digite sua solução aqui..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar Resposta</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Plataforma de Desafios</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/resolver.js"></script>
+</body>
+</html>

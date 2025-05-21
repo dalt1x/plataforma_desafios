@@ -7,9 +7,17 @@ from sqlalchemy.orm import Session
 from typing import List
 from . import models, schemas, crud
 from .database import SessionLocal, engine
-
+from fastapi.middleware.cors import CORSMiddleware
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Dependência de sessão DB
 def get_db():

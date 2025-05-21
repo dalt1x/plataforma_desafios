@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta nome="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro | Plataforma de Desafios</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <h1>Plataforma de Desafios</h1>
+      </div>
+      <div class="nav-links">
+        <a href="login.html">Login</a>
+        <a href="desafios.html">Desafios</a>
+        <a href="ranking.html">Ranking</a>
+      </div>
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="auth-container">
+      <div class="auth-card">
+        <h2>Criar Conta</h2>
+        <form id="register-form">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" nome="nome" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" nome="email" required>
+          </div>
+          <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" nome="senha" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Criar conta</button>
+        </form>
+        <p class="auth-redirect">
+          Já tem uma conta? <a href="login.html">Faça login</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Plataforma de Desafios</p>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>
