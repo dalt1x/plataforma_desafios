@@ -9,12 +9,28 @@ def criar_usuario(db: Session, nome: str, email: str, senha: str):
     db.refresh(novo_usuario)
     return novo_usuario
 
+def deletar_usuario(db: Session, usuario_id: int):
+    usuario = db.query(models.Usuario).filter(models.Usuario.id == usuario_id).first()
+    if usuario:
+        db.delete(usuario)
+        db.commit()
+        return True
+    return False
+
 def criar_problema(db: Session, problema):
     novo = models.Problema(**problema.dict())
     db.add(novo)
     db.commit()
     db.refresh(novo)
     return novo
+
+def deletar_problema(db: Session, problema_id: int):
+    problema = db.query(models.Problema).filter(models.Problema.id == problema_id).first()
+    if problema:
+        db.delete(problema)
+        db.commit()
+        return True
+    return False
 
 def listar_problemas(db: Session, nivel: str = None, tema: str = None):
     query = db.query(models.Problema)
