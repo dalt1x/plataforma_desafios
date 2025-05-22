@@ -19,11 +19,26 @@ class ProblemaCreate(BaseModel):
     tipo: str
     resposta_esperada: str
 
+class LoginRequest(BaseModel):
+    email: str
+    senha: str
+
 class UsuarioOut(BaseModel):
     id: int
     nome: str
     email: str
     score: int
+
+    class Config:
+        orm_mode = True
+
+class ProblemaOut(BaseModel):
+    id: int
+    titulo: str
+    enunciado: str
+    nivel: str
+    tema: str
+    tipo: str
 
     class Config:
         orm_mode = True

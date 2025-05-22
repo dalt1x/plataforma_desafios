@@ -7,10 +7,12 @@ from sqlalchemy.orm import Session
 from typing import List
 from . import models, schemas, crud
 from .database import SessionLocal, engine
+from fastapi import Body
 from fastapi.middleware.cors import CORSMiddleware
-models.Base.metadata.create_all(bind=engine)
-app = FastAPI()
 
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -53,6 +55,13 @@ def deletar_problema_endpoint(problema_id: int = Path(..., title="O ID do proble
 def listar_problemas(nivel: str = Query(None), tema: str = Query(None), db: Session = Depends(get_db)):
     return crud.listar_problemas(db, nivel, tema)
 
+@app.get("/api/problemas/{problema_id}", response_model=schemas.ProblemaOut)
+def obter_problema(problema_id: int, db: Session = Depends(get_db)):
+    problema = db.query(models.Problema).filter(models.Problema.id == problema_id).first()
+    if not problema:
+        raise HTTPException(status_code=404, detail="Problema não encontrado")
+    return problema
+
 @app.post("/responder")
 def responder(resposta: schemas.Resposta, db: Session = Depends(get_db)):
     resultado = crud.processar_resposta(db, resposta.user_id, resposta.problem_id, resposta.resposta)
@@ -64,3 +73,9 @@ def responder(resposta: schemas.Resposta, db: Session = Depends(get_db)):
 def ranking(db: Session = Depends(get_db)):
     return crud.get_ranking(db)
 
+@app.post("/login")
+def login(email: str = Body(...), senha: str = Body(...), db: Session = Depends(get_db)):
+    usuario = db.query(models.Usuario).filter(models.Usuario.email == email).first()
+    if not usuario or usuario.senha != senha:
+        raise HTTPException(status_code=401, detail="Credenciais inválidas")
+    return {"token": str(usuario.id), "user": {"id": usuario.id, "nome": usuario.nome}}

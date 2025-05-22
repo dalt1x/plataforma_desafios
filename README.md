@@ -10,3 +10,5 @@
 ```bash
 pip install -r requirements.txt
 uvicorn app.main:app --reload
+
+http://localhost:3000

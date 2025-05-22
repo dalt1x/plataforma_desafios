@@ -57,7 +57,14 @@ function createChallengeCard(challenge) {
   difficulty.textContent = getDifficultyText(dificuldade);
 
   const solveButton = document.createElement('a');
-  solveButton.href = `resolver.html?id=${challenge?.id ?? '#'}`;
+  
+  if (challenge?.id !== undefined && challenge?.id !== null) {
+  solveButton.href = `/resolver?id=${challenge.id}`;
+} else {
+  solveButton.href = '#';
+  solveButton.classList.add('disabled');
+  solveButton.textContent = 'Indisponível';
+}
   solveButton.className = 'btn btn-primary';
   solveButton.textContent = 'Resolver';
 

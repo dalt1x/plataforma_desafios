@@ -7,12 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (registerForm) {
     registerForm.addEventListener('submit', handleRegister);
   }
-  
-  // Redirect if already logged in
-  const token = localStorage.getItem('authToken');
-  if (token) {
-    window.location.href = 'desafios.html';
-  }
 });
 
 /**

@@ -91,14 +91,10 @@ function renderRanking(table, rankingData) {
     const scoreCell = document.createElement('td');
     scoreCell.textContent = user.score;
     
-    const solvedCell = document.createElement('td');
-    solvedCell.textContent = user.desafios_resolvidos;
-    
     // Append cells to row
     row.appendChild(positionCell);
     row.appendChild(nameCell);
     row.appendChild(scoreCell);
-    row.appendChild(solvedCell);
     
     // Append row to table
     tbody.appendChild(row);

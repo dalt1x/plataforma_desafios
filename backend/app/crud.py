@@ -9,6 +9,12 @@ def criar_usuario(db: Session, nome: str, email: str, senha: str):
     db.refresh(novo_usuario)
     return novo_usuario
 
+def autenticar_usuario(db: Session, email: str, senha: str):
+    usuario = db.query(models.Usuario).filter(models.Usuario.email == email).first()
+    if usuario and usuario.senha_hash == senha:
+        return usuario
+    return None
+
 def deletar_usuario(db: Session, usuario_id: int):
     usuario = db.query(models.Usuario).filter(models.Usuario.id == usuario_id).first()
     if usuario:

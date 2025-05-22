@@ -28,17 +28,27 @@ document.addEventListener('DOMContentLoaded', () => {
  * @param {string} challengeId - Challenge ID
  */
 async function loadChallengeDetails(challengeId) {
-  const detailsContainer = document.getElementById('challenge-details');
+  console.log(">> Chamando loadChallengeDetails com ID:", challengeId);
 
-  if (!detailsContainer) return;
+  const detailsContainer = document.getElementById('challenge-details');
+  if (!detailsContainer) {
+    console.warn(">> Container não encontrado");
+    return;
+  }
 
   try {
+    console.log(">> Fazendo requisição para /api/problemas/" + challengeId);
+
     const challenge = await apiRequest(`/api/problemas/${challengeId}`, {
       method: 'GET'
     });
 
+    console.log(">> Resposta recebida:", challenge);
+
     if (challenge) {
       renderChallengeDetails(detailsContainer, challenge);
+    } else {
+      console.warn(">> Nenhum desafio retornado");
     }
   } catch (error) {
     console.error('Erro ao carregar desafio:', error);
@@ -58,26 +68,17 @@ function renderChallengeDetails(container, challenge) {
   title.textContent = challenge.titulo;
 
   const difficultyBadge = document.createElement('span');
-  difficultyBadge.className = `badge difficulty-${challenge.dificuldade.toLowerCase()}`;
-  difficultyBadge.textContent = getDifficultyText(challenge.dificuldade);
+  difficultyBadge.className = `badge difficulty-${challenge.nivel.toLowerCase()}`;
+  difficultyBadge.textContent = getDifficultyText(challenge.nivel);
 
   const description = document.createElement('div');
   description.className = 'challenge-description';
-  description.innerHTML = `<h3>Descrição</h3><p>${challenge.descricao}</p>`;
-
-  const requirements = document.createElement('div');
-  requirements.className = 'challenge-requirements';
-  requirements.innerHTML = `<h3>Requisitos</h3><p>${challenge.requisitos || 'Não especificados'}</p>`;
-
-  const examples = document.createElement('div');
-  examples.className = 'challenge-examples';
-  examples.innerHTML = `<h3>Exemplos</h3><p>${challenge.exemplos || 'Não especificados'}</p>`;
+  description.innerHTML = `<h3>Descrição</h3><p>${challenge.enunciado}</p>`;
 
   container.appendChild(title);
   container.appendChild(difficultyBadge);
   container.appendChild(description);
-  container.appendChild(requirements);
-  container.appendChild(examples);
+
 }
 
 /**

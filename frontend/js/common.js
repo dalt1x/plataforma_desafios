@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * Check if user is authenticated and update navigation UI
  */
 function checkAuthStatus() {
-  const token = localStorage.getItem('authToken');
+  const token = null;
   const navLinks = document.querySelector('.nav-links');
   
   if (token && navLinks) {
@@ -61,16 +61,13 @@ function checkAuthStatus() {
  * @returns {Promise<Object|null>}
  */
 async function apiRequest(endpoint, options = {}) {
-  const token = localStorage.getItem('authToken');
+  const token = null;
 
   const defaultHeaders = {
     'Content-Type': 'application/json',
   };
 
-  if (token) {
-    defaultHeaders['Authorization'] = `Bearer ${token}`;
-  }
-
+  
   const fetchOptions = {
     ...options,
     headers: {
@@ -82,13 +79,7 @@ async function apiRequest(endpoint, options = {}) {
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, fetchOptions);
 
-    if (response.status === 401) {
-      localStorage.removeItem('authToken');
-      showNotification('Sessão expirada. Por favor, faça login novamente.', 'error');
-      setTimeout(() => window.location.href = 'login.html', 2000);
-      return null;
-    }
-
+    
     const contentType = response.headers.get('Content-Type');
     let data = null;
 
@@ -144,7 +135,7 @@ function logout() {
  * @returns {boolean}
  */
 function requireAuth() {
-  const token = localStorage.getItem('authToken');
+  const token = null;
   if (!token && !window.location.href.includes('login.html') && !window.location.href.includes('register.html')) {
     window.location.href = 'login.html';
     return false;
@@ -157,7 +148,7 @@ function requireAuth() {
  * @returns {boolean}
  */
 function isAuthenticated() {
-  return Boolean(localStorage.getItem('authToken'));
+  return true;
 }
 
 /**
