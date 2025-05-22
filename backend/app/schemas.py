@@ -30,7 +30,7 @@ class UsuarioOut(BaseModel):
     score: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ProblemaOut(BaseModel):
     id: int
@@ -41,4 +41,4 @@ class ProblemaOut(BaseModel):
     tipo: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True

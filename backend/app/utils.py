@@ -13,3 +13,6 @@ def calcular_pontos(nivel: str) -> int:
 
 def hash_senha(senha: str) -> str:
     return hashlib.sha256(senha.encode()).hexdigest()
+
+def verificar_senha(senha: str, senha_hash: str) -> bool:
+    return hash_senha(senha) == senha_hash

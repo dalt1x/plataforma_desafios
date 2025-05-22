@@ -1,11 +1,5 @@
-/**
- * Common JS functions for all pages
- */
-
-// API Base URL
 const API_BASE_URL = 'http://localhost:8000';
 
-// Toggle mobile navigation and check auth on load
 document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.querySelector('.hamburger');
   const navLinks = document.querySelector('.nav-links');
@@ -25,13 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
   checkAuthStatus();
 });
 
-/**
- * Check if user is authenticated and update navigation UI
- */
 function checkAuthStatus() {
-  const token = null;
+  const token = localStorage.getItem('authToken');
   const navLinks = document.querySelector('.nav-links');
-  
+
   if (token && navLinks) {
     const existingLogout = navLinks.querySelector('#logout-link');
     if (!existingLogout) {
@@ -51,23 +42,20 @@ function checkAuthStatus() {
       loginLink.href = '#';
       loginLink.textContent = 'Meu Perfil';
     }
+  } else {
+    const logoutLink = document.querySelector('#logout-link');
+    if (logoutLink) logoutLink.remove();
   }
 }
 
-/**
- * Perform authenticated API request
- * @param {string} endpoint
- * @param {Object} options
- * @returns {Promise<Object|null>}
- */
 async function apiRequest(endpoint, options = {}) {
-  const token = null;
+  const token = localStorage.getItem('authToken');
 
   const defaultHeaders = {
     'Content-Type': 'application/json',
+    ...(token && { 'Authorization': `Bearer ${token}` }),
   };
 
-  
   const fetchOptions = {
     ...options,
     headers: {
@@ -78,8 +66,6 @@ async function apiRequest(endpoint, options = {}) {
 
   try {
     const response = await fetch(`${API_BASE_URL}${endpoint}`, fetchOptions);
-
-    
     const contentType = response.headers.get('Content-Type');
     let data = null;
 
@@ -99,11 +85,6 @@ async function apiRequest(endpoint, options = {}) {
   }
 }
 
-/**
- * Show temporary notification
- * @param {string} message
- * @param {'success'|'error'} type
- */
 function showNotification(message, type = 'success') {
   const existing = document.querySelector('.notification');
   if (existing) existing.remove();
@@ -120,9 +101,6 @@ function showNotification(message, type = 'success') {
   }, 3000);
 }
 
-/**
- * Logout user and redirect to login
- */
 function logout() {
   localStorage.removeItem('authToken');
   localStorage.removeItem('userData');
@@ -130,12 +108,8 @@ function logout() {
   setTimeout(() => window.location.href = 'login.html', 1000);
 }
 
-/**
- * Redirect user to login if not authenticated
- * @returns {boolean}
- */
 function requireAuth() {
-  const token = null;
+  const token = localStorage.getItem('authToken');
   if (!token && !window.location.href.includes('login.html') && !window.location.href.includes('register.html')) {
     window.location.href = 'login.html';
     return false;
@@ -143,19 +117,10 @@ function requireAuth() {
   return true;
 }
 
-/**
- * Check authentication status without redirect
- * @returns {boolean}
- */
 function isAuthenticated() {
-  return true;
+  return !!localStorage.getItem('authToken');
 }
 
-/**
- * Format ISO date to local date string
- * @param {string} dateString
- * @returns {string}
- */
 function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString('pt-BR', {

@@ -2,20 +2,22 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.requests import Request
 from fastapi.responses import HTMLResponse, JSONResponse
-from fastapi import FastAPI, HTTPException, Depends, Query, Path
+from fastapi import FastAPI, HTTPException, Depends, Query, Path, status
 from sqlalchemy.orm import Session
 from typing import List
 from . import models, schemas, crud
 from .database import SessionLocal, engine
 from fastapi import Body
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
+from .auth import criar_token_acesso, verificar_token
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -74,8 +76,9 @@ def ranking(db: Session = Depends(get_db)):
     return crud.get_ranking(db)
 
 @app.post("/login")
-def login(email: str = Body(...), senha: str = Body(...), db: Session = Depends(get_db)):
-    usuario = db.query(models.Usuario).filter(models.Usuario.email == email).first()
-    if not usuario or usuario.senha != senha:
-        raise HTTPException(status_code=401, detail="Credenciais inválidas")
-    return {"token": str(usuario.id), "user": {"id": usuario.id, "nome": usuario.nome}}
+def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    usuario = crud.autenticar_usuario(db, form_data.username, form_data.password)
+    if not usuario:
+        raise HTTPException(status_code=400, detail="Credenciais inválidas")
+    token = criar_token_acesso({"sub": str(usuario.id)})
+    return {"access_token": token, "token_type": "bearer", "usuario": usuario}

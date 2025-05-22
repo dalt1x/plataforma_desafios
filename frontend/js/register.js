@@ -45,8 +45,8 @@ async function handleRegister(e) {
     
     if (response) {
       // Store token and user data
-      localStorage.setItem('authToken', response.token);
-      localStorage.setItem('userData', JSON.stringify(response.user));
+      localStorage.setItem('authToken', response.access_token);
+      localStorage.setItem('userData', JSON.stringify(response.usuario));
       
       showNotification('Conta criada com sucesso!');
       

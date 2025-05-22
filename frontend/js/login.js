@@ -21,17 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const senha = senhaInput.value;
 
     try {
+      const formData = new URLSearchParams();
+      formData.append('username', email);
+      formData.append('password', senha);
+
       const res = await fetch('http://localhost:8000/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, senha }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData,
       });
 
       if (!res.ok) throw new Error("Login falhou");
 
       const data = await res.json();
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userData', JSON.stringify(data.user));
+      localStorage.setItem('authToken', data.access_token);
+      localStorage.setItem('userData', JSON.stringify(data.usuario));
 
       alert("Login bem-sucedido!");
       window.location.href = 'desafios.html';

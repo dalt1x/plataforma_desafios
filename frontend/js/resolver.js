@@ -1,8 +1,4 @@
-/**
- * Challenge solver page functionality
- */
 document.addEventListener('DOMContentLoaded', () => {
-  // Get challenge ID from URL
   const params = new URLSearchParams(window.location.search);
   const challengeId = params.get('id');
 
@@ -11,56 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  console.log('Carregando desafio ID:', challengeId); // depuração
-
-  // Carrega detalhes do desafio
   loadChallengeDetails(challengeId);
 
-  // Set up solution form
   const solutionForm = document.getElementById('solution-form');
   if (solutionForm) {
     solutionForm.addEventListener('submit', (e) => handleSolutionSubmit(e, challengeId));
   }
 });
 
-/**
- * Carrega detalhes do desafio da API
- * @param {string} challengeId - Challenge ID
- */
 async function loadChallengeDetails(challengeId) {
-  console.log(">> Chamando loadChallengeDetails com ID:", challengeId);
-
   const detailsContainer = document.getElementById('challenge-details');
-  if (!detailsContainer) {
-    console.warn(">> Container não encontrado");
-    return;
-  }
+  if (!detailsContainer) return;
 
   try {
-    console.log(">> Fazendo requisição para /api/problemas/" + challengeId);
-
     const challenge = await apiRequest(`/api/problemas/${challengeId}`, {
       method: 'GET'
     });
 
-    console.log(">> Resposta recebida:", challenge);
-
     if (challenge) {
       renderChallengeDetails(detailsContainer, challenge);
-    } else {
-      console.warn(">> Nenhum desafio retornado");
     }
   } catch (error) {
     console.error('Erro ao carregar desafio:', error);
-    detailsContainer.innerHTML = '<p class="error-message">Erro ao carregar desafio. Tente novamente mais tarde.</p>';
+    detailsContainer.innerHTML = '<p class="error-message">Erro ao carregar desafio.</p>';
   }
 }
 
-/**
- * Render challenge details in container
- * @param {HTMLElement} container - Container element
- * @param {Object} challenge - Challenge data
- */
 function renderChallengeDetails(container, challenge) {
   container.innerHTML = '';
 
@@ -78,21 +50,19 @@ function renderChallengeDetails(container, challenge) {
   container.appendChild(title);
   container.appendChild(difficultyBadge);
   container.appendChild(description);
-
 }
 
-/**
- * Handle solution submission
- * @param {Event} e - Form submission event
- * @param {string} challengeId - Challenge ID
- */
 async function handleSolutionSubmit(e, challengeId) {
   e.preventDefault();
-
   if (!requireAuth()) return;
 
-  const solutionText = document.getElementById('solution').value;
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  if (!userData || !userData.id) {
+    showNotification('Usuário não identificado.', 'error');
+    return;
+  }
 
+  const solutionText = document.getElementById('solution').value;
   if (!solutionText) {
     showNotification('Por favor, insira sua solução', 'error');
     return;
@@ -105,19 +75,25 @@ async function handleSolutionSubmit(e, challengeId) {
   }
 
   try {
-    const response = await apiRequest('/responder', {
+    const response = await fetch('http://localhost:8000/responder', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
-        desafio_id: challengeId,
+        user_id: userData.id,
+        problem_id: challengeId,
         resposta: solutionText
       }),
     });
 
-    if (response) {
+    if (response.ok) {
       showNotification('Resposta enviada com sucesso!');
       setTimeout(() => {
         window.location.href = 'desafios.html';
       }, 2000);
+    } else {
+      showNotification('Erro ao enviar resposta.', 'error');
     }
   } catch (error) {
     console.error('Erro ao enviar resposta:', error);
@@ -130,11 +106,6 @@ async function handleSolutionSubmit(e, challengeId) {
   }
 }
 
-/**
- * Get difficulty text from code
- * @param {string} difficulty - Difficulty code
- * @returns {string} Difficulty text
- */
 function getDifficultyText(difficulty) {
   const map = {
     'FACIL': 'Fácil',
