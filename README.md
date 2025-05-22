@@ -12,10 +12,12 @@ Plataforma web para gerenciamento e resolução de desafios, com ranking e auten
 - **SQLite** – banco de dados relacional leve
 - **Uvicorn** – servidor ASGI para FastAPI
 - **Pydantic** – validação de dados
+- **OAuth2 com JWT usando python-jose e passlib** - Autenticação
 
 ### Frontend
 - **HTML5**
-- **JavaScript (vanilla)**
+- **JavaScript Vanilla (sem frameworks como React/Vue)**
+- **Uso básico de redirecionamentos via script**
 - **CSS3**
 
 ## Estrutura do Projeto
