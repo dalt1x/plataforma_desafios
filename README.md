@@ -1,4 +1,3 @@
-
 # Plataforma de Desafios
 
 Plataforma web para gerenciamento e resolução de desafios, com ranking e autenticação de usuários.
@@ -47,29 +46,8 @@ plataforma_desafios-master/
 └── README.md
 ```
 
-## Como Executar o Backend
+🌐 Acesse o site: [Clique aqui para acessar o site publicado](https://plataforma-desafios.vercel.app/login.html)
 
-1. Acesse o diretório `backend`:
-   ```bash
-   cd backend
-   ```
+---
 
-2. Instale as dependências:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Execute o servidor:
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-4. Acesse a API no navegador ou via frontend:
-   ```
-   http://localhost:8000
-   ```
-
-## Observações
-
-- O frontend pode ser aberto diretamente no navegador acessando os arquivos HTML.
-- Para integração com o backend, certifique-se de que o servidor esteja rodando localmente.
+**Projeto acadêmico - UNIG/EAD - 2025**
