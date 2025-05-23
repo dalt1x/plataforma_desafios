@@ -1,5 +1,3 @@
-export { API_BASE_URL }
-
 const API_BASE_URL = 'https://plataforma-desafios.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -1,5 +1,3 @@
-import { API_BASE_URL } from './common.js';
-
 document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const challengeId = params.get('id');
@@ -77,7 +75,7 @@ async function handleSolutionSubmit(e, challengeId) {
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/responder`, {
+    const response = await fetch(`https://plataforma-desafios.onrender.com/responder`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

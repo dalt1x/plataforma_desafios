@@ -1,6 +1,4 @@
-import { API_BASE_URL } from './common.js';
-
-document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
 
   if (!loginForm) {
@@ -27,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
       formData.append('username', email);
       formData.append('password', senha);
 
-      const res = await fetch(`${API_BASE_URL}/login`, {
+      const res = await fetch(`https://plataforma-desafios.onrender.com/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: formData,
