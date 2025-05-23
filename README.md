@@ -19,6 +19,10 @@ Plataforma web para gerenciamento e resolução de desafios, com ranking e auten
 - **Uso básico de redirecionamentos via script**
 - **CSS3**
 
+### Deploy
+- **Render** - Backend
+- **Vercel** - Frontend
+
 ## Estrutura do Projeto
 
 ```
