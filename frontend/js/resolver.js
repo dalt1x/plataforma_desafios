@@ -57,7 +57,7 @@ async function handleSolutionSubmit(e, challengeId) {
   if (!requireAuth()) return;
 
   const userData = JSON.parse(localStorage.getItem('userData'));
-  if (!userData || !userData.id) {
+  if (!userData || !userData.id || userData === undefined) {
     showNotification('Usuário não identificado.', 'error');
     return;
   }

@@ -9,7 +9,7 @@ def validar_resposta(resposta_usuario: str, resposta_esperada: str, tipo: str) -
     return False
 
 def calcular_pontos(nivel: str) -> int:
-    return 10 if nivel == "facil" else 20 if nivel == "medio" else 30
+    return 5 if nivel == "facil" else 10 if nivel == "medio" else 20
 
 def hash_senha(senha: str) -> str:
     return hashlib.sha256(senha.encode()).hexdigest()
