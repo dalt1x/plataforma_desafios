@@ -50,7 +50,7 @@ function createChallengeCard(challenge) {
   const solveButton = document.createElement('a');
   
   if (challenge?.id !== undefined && challenge?.id !== null) {
-  solveButton.href = `/resolver?id=${challenge.id}`;
+  solveButton.href = `/resolver.html?id=${challenge.id}`;
 } else {
   solveButton.href = '#';
   solveButton.classList.add('disabled');
