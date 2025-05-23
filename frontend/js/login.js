@@ -1,3 +1,5 @@
+import { API_BASE_URL } from './common.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm = document.getElementById('login-form');
 
@@ -25,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       formData.append('username', email);
       formData.append('password', senha);
 
-      const res = await fetch('http://localhost:8000/login', {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: formData,

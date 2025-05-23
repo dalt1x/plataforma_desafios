@@ -1,4 +1,6 @@
-const API_BASE_URL = 'http://localhost:8000';
+export { API_BASE_URL }
+
+const API_BASE_URL = 'https://plataforma-desafios.onrender.com';
 
 document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.querySelector('.hamburger');

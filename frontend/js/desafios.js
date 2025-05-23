@@ -1,29 +1,21 @@
-/**
- * Challenges page functionality
- */
+
 document.addEventListener('DOMContentLoaded', () => {
   loadChallenges();
 });
 
-/**
- * Load challenges from API
- */
 async function loadChallenges() {
   const challengesContainer = document.getElementById('desafios-list');
 
   if (!challengesContainer) return;
 
   try {
-    // Call challenges API
     const challenges = await apiRequest('/api/problemas', {
       method: 'GET'
     });
 
     if (challenges && Array.isArray(challenges) && challenges.length > 0) {
-      // Clear loading spinner
       challengesContainer.innerHTML = '';
 
-      // Render challenges
       challenges.forEach(challenge => {
         challengesContainer.appendChild(createChallengeCard(challenge));
       });
@@ -37,7 +29,6 @@ async function loadChallenges() {
 }
 
 /**
- * Create challenge card element
  * @param {Object} challenge - Challenge data
  * @returns {HTMLElement} Challenge card element
  */
@@ -77,7 +68,6 @@ function createChallengeCard(challenge) {
 }
 
 /**
- * Get difficulty text from code
  * @param {string} difficulty - Difficulty code
  * @returns {string} Difficulty text
  */
